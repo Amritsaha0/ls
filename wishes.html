@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Wishes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* General CSS for layout and animations */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 130%; /* Ensure full height */
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 80%; /* Adjust width as needed */
+            max-width: 800px;
+            overflow: hidden; /* Ensure content doesn't overflow */
+            animation: fadeIn 0.5s ease-out;
+            margin: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5em;
+            color: #ff69b4;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: textBounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes textBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .wish-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .wish-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 105, 180, 0.2);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+            z-index: -1;
+        }
+
+        .wish-card.opened::before {
+            transform-origin: right;
+            transform: scaleX(1);
+        }
+
+        .wish-details {
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease-in-out;
+            display: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        .wish-card.opened .wish-details {
+            display: block;
+            animation: expandIn 0.5s ease-out;
+        }
+
+        @keyframes expandIn {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px; /* Adjust as needed */
+            }
+        }
+
+        .wish-details h3 {
+            color: #ff69b4;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .wish-details p {
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .clear-btn {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .clear-btn:hover {
+            background-color: #ff1493;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+        }
+
+        /* Circle Photo Styles */
+        .wish-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            overflow: hidden;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .wish-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <audio id="birthday-music" src="birthday_music.mp3" loop autoplay></audio>
+    <div class="container">
+        <h1 class="animate-text">Friend Wishes</h1>
+        <div id="wishes-container" class="wishes-container">
+            <!-- Hardcoded wishes with opening animation -->
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Himanshu</h3>
+                <div class="wish-details">
+                    <p>Happy Birthday to the most wonderful sister in the world! Your kindness, love, and laughter brighten my life every day. I'm so grateful for all the memories we've shared and the ones yet to come. May your day be filled with joy, love, and everything that makes you smile. Here's to another amazing year ahead!</p>
+                </div>
+            </div>
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Anushri ❤️❤️</h3>
+                <div class="wish-details">
+                    <p></p>
+                </div>
+            </div> 
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Niketa</h3>
+                <div class="wish-details">
+                    <p>Hi Ziya, the pretty lady 🥰🥰..</p>
+                    <p>Wishing you a joyous birthday surrounded by loved ones and cherished moments 🎂🍰🥳🎊🎉🎁</p>
+                    <p>I wish may all your dreams come true 😊😊</p>
+                    <p>Enjoy your day to its fullest ☺️☺️😇😇</p>
+                    <p>Once again Happy Birthday ❤️❤️</p>
+                </div>
+            </div>
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Shubhangi</h3>
+                <div class="wish-details">
+                    <p>Happy birthday Ziya</p>
+                    <p>Enjoy your day..... 💖💖💖💖💖💖</p>
+                </div>
+            </div>
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Manya</h3>
+                <div class="wish-details">
+                    <p>Heyyyy cutie, happiest birthday, have a great year ahead, you are loved and you deserve all the love of this world, love love<3</p>
+                </div>
+            </div>
+            
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Ankiii</h3>
+                <div class="wish-details">
+                    <p>Happy birthday beautiful stay blessed you know I really love you thanku for always being there for mera gadha bhai and you always use to show him the right path Thanku for being the person I can trust blindly stay blessed Complete your all dream my well wishes is always with you HAPPY BIRTHDAY</p>
+                </div>
+            </div>
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Aishanya</h3>
+                <div class="wish-details">
+                    <p></p>
+                </div>
+            </div>
+            <div class="wish-card" onclick="toggleWishDetails(this)">
+                <h3>Arpit</h3>
+                <div class="wish-details">
+                    <p></p>
+                </div>
+            </div>
+            
+            
+             
+        <!-- </div>
+        <button id="clear-wishes-btn" class="clear-btn" onclick="clearWishes()">Clear Wishes</button>
+    </div> -->
+
+    <script>
+       const toggleWishDetails = (card) => {
+            card.classList.toggle('opened');
+        };
+
+        // Function to clear wishes
+        const clearWishes = () => {
+            const wishesContainer = document.getElementById('wishes-container');
+            wishesContainer.innerHTML = '';
+        };
+    </script>
+    </body>
+    </html>
